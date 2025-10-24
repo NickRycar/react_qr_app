@@ -18,4 +18,3 @@ const astronautLogo = ({ flags, ldClient /*, ...otherProps */ }) => {
 };
 
 export default withLDConsumer()(astronautLogo);
-

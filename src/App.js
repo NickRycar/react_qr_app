@@ -8,6 +8,7 @@ import HeaderLDLogo from "./components/headerLogo";
 import Heart from "./components/heart";
 import CustomerLogo from "./components/customerLogo";
 import Astronaut from "./components/astronaut";
+import AstronautName from "./components/astronautName";
 
 function App() {
   const [headerStyle, setHeaderStyle] = useState("gray-app-header");
@@ -42,6 +43,7 @@ function App() {
         <QRCode />
         <br />
         <Astronaut />
+        <AstronautName />
         <div className="chatbot">
           <Chatbot />
         </div>

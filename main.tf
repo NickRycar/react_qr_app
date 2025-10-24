@@ -203,6 +203,35 @@ resource "launchdarkly_feature_flag" "release_astronaut" {
   ]
 }
 
+resource "launchdarkly_feature_flag" "release_astronaut_name" {
+  project_key = var.project_key
+  key         = "release-astronaut-name"
+  name        = "Release: Astronaut Name"
+
+  variation_type = "boolean"
+  variations {
+    value       = true
+    name        = "New"
+  }
+  variations {
+    value       = false
+    name        = "Old"
+  }
+
+  defaults {
+    on_variation  = 0
+    off_variation = 1
+  }
+
+  client_side_availability {
+    using_environment_id = true
+  }
+
+  tags = [
+    "front-end",
+    "QR"
+  ]
+}
 
 resource "launchdarkly_feature_flag" "config_customer_logo" {
   project_key = var.project_key
