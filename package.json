@@ -25,6 +25,8 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "symlink": "mv node_modules src/ && ln -s src/node_modules .",
+    "reset_deps": "git restore package*json",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
