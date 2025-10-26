@@ -3,13 +3,17 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { asyncWithLDProvider } from "launchdarkly-react-client-sdk";
+import { useFlags, asyncWithLDProvider } from "launchdarkly-react-client-sdk";
 import { browserName, deviceType, osName } from "react-device-detect";
 import getUserId from "./util/getUserId";
+import getAstronautId from "./util/getAstronautId";
 
 const CLIENTKEY = "68f11ee0a3ccc209b68d60d2";
 
 let id = getUserId();
+export const astronautId = getAstronautId();
+
+export const astronautName = "AstroBot";
 
 (async () => {
   const LDProvider = await asyncWithLDProvider({
@@ -21,6 +25,8 @@ let id = getUserId();
         device: deviceType,
         operatingSystem: osName,
         browserName: browserName,
+        astronautId: astronautId,
+        astronautName: `${astronautName}${astronautId}`,
       },
     },
   });
