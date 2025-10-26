@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { asyncWithLDProvider } from "launchdarkly-react-client-sdk";
-import { deviceType, osName } from "react-device-detect";
+import { browserName, deviceType, osName } from "react-device-detect";
 import getUserId from "./util/getUserId";
 
 const CLIENTKEY = "68f11ee0a3ccc209b68d60d2";
@@ -20,6 +20,7 @@ let id = getUserId();
       custom: {
         device: deviceType,
         operatingSystem: osName,
+        browserName: browserName,
       },
     },
   });
