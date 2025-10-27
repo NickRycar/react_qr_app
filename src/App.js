@@ -4,6 +4,7 @@ import { useLDClient, useFlags } from "launchdarkly-react-client-sdk";
 import QRCode from "./components/qrCode";
 import CustomerLogo from "./components/customerLogo";
 import Astronaut from "./components/astronaut";
+import AstronautName from "./components/astronautName";
 
 function App() {
   const ldClient = useLDClient();
@@ -36,11 +37,7 @@ function App() {
         <QRCode />
         <br />
         <Astronaut />
-        <div>
-          <br />
-          <span style={{ color: 'black' }}><center><h2>My Name is AstroBot!</h2></center></span>
-          <br />
-        </div>
+        <AstronautName /> 
       </div>
     </div>
   );
