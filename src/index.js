@@ -7,6 +7,8 @@ import { useFlags, asyncWithLDProvider } from "launchdarkly-react-client-sdk";
 import { browserName, deviceType, osName } from "react-device-detect";
 import getUserId from "./util/getUserId";
 import getAstronautId from "./util/getAstronautId";
+import Observability, { LDObserve } from '@launchdarkly/observability'
+import SessionReplay, { LDRecord } from '@launchdarkly/session-replay'
 
 const CLIENTKEY = "68f11ee0a3ccc209b68d60d2";
 
@@ -29,6 +31,20 @@ export const astronautName = "AstroBot";
         astronautName: `${astronautName}${astronautId}`,
       },
     },
+    options: {
+      plugins: [
+        new Observability({
+          networkRecording: {
+            enabled: true,
+            recordHeadersAndBody: true
+          }
+        }),
+        new SessionReplay({
+          // Defaults to no obfuscation - see https://docs.launchdarkly.com/sdk/features/client-side-observability?site=launchDarkly#privacy for more details
+          privacySetting: 'none'
+        })
+      ]
+    }
   });
 
   ReactDOM.render(
