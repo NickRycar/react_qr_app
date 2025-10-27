@@ -1,15 +1,19 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import { useFlags } from "launchdarkly-react-client-sdk";
-import { addResponseMessage } from 'react-chat-widget';
-import Chatbot from "./components/chatbot";
+import { useLDClient, useFlags } from "launchdarkly-react-client-sdk";
 import QRCode from "./components/qrCode";
-import HeaderLDLogo from "./components/headerLogo";
-import Heart from "./components/heart";
 import CustomerLogo from "./components/customerLogo";
 import Astronaut from "./components/astronaut";
+import AstronautName from "./components/astronautName";
 
 function App() {
+  const ldClient = useLDClient();
+
+  useEffect(() => {
+    // Tracking your memberId lets us know you are connected.
+    ldClient?.track('68f11ee0a3ccc209b68d60d0');
+  }, [ldClient]);
+
   const [headerStyle, setHeaderStyle] = useState("gray-app-header");
   const { configBackgroundColor } = useFlags();
 
@@ -25,26 +29,15 @@ function App() {
     updateBackGroundColor();
   }, [configBackgroundColor]);
 
-
-  useEffect(() => {
-    addResponseMessage('Hi there! Ask me a question!');
-  }, []);
-
   return (
     <div className={headerStyle}>
-      <div className="black-header">
-        <HeaderLDLogo />
-      </div>
       
       <div className={headerStyle}>
-        <Heart />
         <CustomerLogo />
         <QRCode />
         <br />
         <Astronaut />
-        <div className="chatbot">
-          <Chatbot />
-        </div>
+        <AstronautName />
       </div>
     </div>
   );
