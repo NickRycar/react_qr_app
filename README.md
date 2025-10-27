@@ -1,51 +1,41 @@
-# Getting Started with the LaunchDarkly React QR Demo
+# Getting Started with the ~~LaunchDarkly~~ Nick Rycar Totally Unique React QR Demo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Usage
+## Setup
 
-Want to use GitHub Pages to publish your own copy of this? You've come to the right place!
+### Assumptions & Prerequisites
 
-### Duplicating the repository and creating a GitHub Page
+*This project was tested on MacOS with default packages provided by Homebrew. Nothing herein should be Mac-specific, but YMMV.*
 
-1. Fork this repository
+Requirements are fairly minimal -- In addition to git, you will need `npm` and `terraform` in order to run this demo. Install via your package manager of choice.
+
+Example:
+
+`brew install node && brew install terraform`
+
+
+You will also need at least **two** web browsers. I used `Firefox` and `Safari` in my demos.
+
+### Installing Dependencies
+
 1. Clone the new repository to your local machine, cloud editor, or whatever
 1. Run `npm install` in your local root directory of the project
-    1. NOTE: Due to an [outstanding issue with Webpack and version 17+ of Node](https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported), you must use Node version 16.X or below.
-    1. NOTE: If you receive dependency errors, you can add the `--legacy-peer-deps` flag
-1. In your GitHub repository, go to Settings > Pages and create a GitHub Page. Copy the URL of your GitHub Page, for use in the next section.
+    * NOTE: You'll recieve a number of vulnerability warnings, but nothing that will prevent the site from loading. Leave it be.
 
-### Modifying variables for your own usage
+### Modifying variables
 
-1. In `src/components/qrCode.js`, modify `QRURL` to be your github pages URL
-1. In `package.json`, modify the "homepage" to point to your github pages URL
 1. In `src/index.js`, modify `CLIENTKEY` to be your own LaunchDarkly client-side SDK key
-
-### Flags used by the app
-
-* `config-background-color`: A **string** flag with `gray`, `purple`, `blue`, and `red` as string variations. 
-* `config-customer-logo`: A **string** flag with variations containing URLs of images.
-* `show-qr-code`: **boolean**
-* `release-new-ui`: A **boolean** placeholder flag which you can use as a prerequisite for other flags
-* `release-header-logo`: **boolean**
-* `release-astronaut`: **boolean**
-* `show-customer-logo`: **boolean**
-* `release-heart`: **boolean**
+    * NOTE: This is environment-specific.
+1. Move or copy `terraform.tfvars.example` to `terraform.tfvars`
+1. Then, edit the `terraform.tfvars` file
+    * Replace the `access_token`, `project_key`, and `environment_key` values.
 
 ### Creating LaunchDarkly flags
-
-The project [**React QR Demo**](https://app.launchdarkly.com/react-qr-demo/) exists on the LD Production account with all the necessary flags. You can add a new environment for yourself.
-
-If you want to create a new project with all the right flags, then you can either use the LaunchDarkly Terraform integration to set all the flags up in one go (see below), or do it manually using the list above.
-
-#### Creating flags with Terraform
 
 1. Ensure that you have:
    1. An empty LaunchDarkly project, ready for some funky fresh flags
    2. An API access token with `Writer` permissions. Go to the [Authorizations](https://app.launchdarkly.com/settings/authorization) page to create it.
    3. Terraform installed
-1. See the `terraform.tfvars.example` file in the root directory? Rename it to `terraform.tfvars`.
-1. Then edit the `terraform.tfvars` file, replacing the `access_token`, `project_key`, `environment_key`, `customer_logo_url`, `other_logo_url`, and `qr_code_os_targets` values.
 1. Run: `terraform init` to initialize the configuration
 1. Run: `terraform plan`
 1. If that ran with no errors, then run: `terraform apply`
@@ -53,10 +43,33 @@ If you want to create a new project with all the right flags, then you can eithe
 
 ### Testing
 
-1. To test that it's working locally, run `npm start` in the root directory of your project
-1. On your LaunchDarkly dashboard, try turning the `show-qr-code` flag on and off, and serve different colors in the `config-background-color` flag
+1. To test that it's working locally, run `npm start` in the root directory of your project.
+1. A window will automatically open in your default browser.
+    * Open the same URL (https://localhost:3000/react_qr_app) in a second browser of your choosing.
 
-### Deploying
 
-1. When you're ready, `npm run deploy` to deploy to a new `gh-pages` branch of your repository
-1. On your GitHub repository, go to Settings > Pages and ensure you're using the `gh-pages` branch in the `root` directory
+The table's set. Time to demo!
+
+## Running the Demo
+
+Below are all the technical steps required, and light narrative to frame the demonstration. 
+
+### A Note About Flags
+
+This demo primarily uses the `release-astronaut-name` flag, but the same steps can be taken for any of the remaining flags. Some good ones to play with are:
+
+* `config-customer-logo`: toggle between the plucky `Planet Express` scamps and the hostile takeover from `Mom Corp`
+* `release-new-ui`: go from grey and plain to colorful and rad!
+
+### Part One: Release and Remediate
+
+*Instead of the generic, dull "AstroBot", we want to give our customers the ability to NAME their Astronaut. To kick this off, we're adding a unique(ish) identifier to each bot loaded. Which... is still generic and dull, but a first step!*
+
+To implement this feature, we've created a new utility function to create each bot's identifier, and we plan to call it from index.js, but this is just a prototype! I want to be able to test it before it goes live, and I don't want my customers to see this hacky version. But I **also** don't want it to sit in a feature branch forever, going stale before it's ready for realease.
+
+Enter **FEATURE FLAGS**!
+
+Feature flags let us release updates to our application as soon as we create them, but hide them behind conditional levers that *we* control.
+
+#### Checkout the feature branch
+
