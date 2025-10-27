@@ -6,14 +6,12 @@ import reportWebVitals from "./reportWebVitals";
 import { useFlags, asyncWithLDProvider } from "launchdarkly-react-client-sdk";
 import { browserName, deviceType, osName } from "react-device-detect";
 import getUserId from "./util/getUserId";
-import getAstronautId from "./util/getAstronautId";
 import Observability, { LDObserve } from '@launchdarkly/observability'
 import SessionReplay, { LDRecord } from '@launchdarkly/session-replay'
 
 const CLIENTKEY = "68f11ee0a3ccc209b68d60d2";
 
 let id = getUserId();
-export const astronautId = getAstronautId();
 
 export const astronautName = "AstroBot";
 
@@ -27,8 +25,6 @@ export const astronautName = "AstroBot";
         device: deviceType,
         operatingSystem: osName,
         browserName: browserName,
-        astronautId: astronautId,
-        astronautName: `${astronautName}${astronautId}`,
       },
     },
     options: {

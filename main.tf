@@ -270,10 +270,6 @@ resource "launchdarkly_feature_flag_environment" "show_customer_logo_env"{
 
     on = true
 
-    prerequisites {
-        flag_key = launchdarkly_feature_flag.release_new_ui.key
-        variation = 0
-        }
     fallthrough {
         variation = 0
         }
